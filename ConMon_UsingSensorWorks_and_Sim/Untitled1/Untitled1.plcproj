@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{509eeec8-344f-4247-8d42-cd20c1b3c8d4}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Untitled1</Name>
+    <ProgramVersion>3.1.4024.0</ProgramVersion>
+    <Application>{bee0cd7f-9639-4f06-a263-c3def6f6b5fa}</Application>
+    <TypeSystem>{eacdbb94-bc7b-4b47-a22b-b9ab30852812}</TypeSystem>
+    <Implicit_Task_Info>{337f2891-d0e4-4444-ba37-16d6d735999e}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{a340c36f-881d-43d2-9cec-87aa5fa0203b}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{f74e961f-0e12-4ce1-9b41-bad26f738497}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{6cded481-e046-4e39-a7c7-198cd16c9141}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CM_Process_Task.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Error Monitoring\ST_HRErrHist.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Error Monitoring\E_TalkToGateway_Err.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_AnalysisIDs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_IsoClass.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_RequestType.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Function Generator\E_FunctionType.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\ST_ReceivedData.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FUBs\FB_Flash.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FUBs\FB_FunctionGenerator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FUBs\FB_FunctionGenerator_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FUBs\FB_HRErrHist.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GLOBAL.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="GVLs\GVL_Const.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="HTTP_Task.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\CM_Collection\CM_SensorWorks_Sensor1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\CM_Collection\CM_SensorWorks_Sensor2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\CM_Collection\CM_Sim.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\CM_Processing\CM_SensorWorks_Sensor1ISO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\CM_Processing\CM_SensorWorks_Sensor2ISO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\CM_Processing\CM_Sim_ISO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HTTP\FB_RequestToGateway.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HTTP\FB_TalkToGateway.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HTTP\GetDataFromSensorWorksHTTP.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HTTP\TalkToRest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DUTs" />
+    <Folder Include="DUTs\Error Monitoring" />
+    <Folder Include="DUTs\Function Generator" />
+    <Folder Include="FUBs" />
+    <Folder Include="GVLs" />
+    <Folder Include="POUs\CM_Collection" />
+    <Folder Include="POUs\CM_Processing" />
+    <Folder Include="POUs\HTTP" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_CM">
+      <DefaultResolution>Tc3_CM, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_CM</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_CM_Base">
+      <DefaultResolution>Tc3_CM_Base, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_CM_Base</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_IotBase">
+      <DefaultResolution>Tc3_IotBase, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_IotBase</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_JsonXml">
+      <DefaultResolution>Tc3_JsonXml, * (Beckhoff Automation GmbH)</DefaultResolution>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_MultiArray">
+      <DefaultResolution>Tc3_MultiArray, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_MultiArray</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Untitled1.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" />
+      <d n="Values" t="Hashtable" />
+    </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

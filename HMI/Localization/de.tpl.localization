@@ -1,0 +1,14 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.12.760.54/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "locale": "de",
+  "localizedText": {
+    "L_Language": "Sprache",
+    "L_German": "Deutsch",
+    "L_English": "Englisch",
+    "L_LanguageSelection": "Sprachauswahl",
+    "L_CloseText": "Schließen",
+    "L_ConMon": "ConMon",
+    "L_SensorValues": "Sensor Values",
+    "L_Simulated": "Simulated"
+  }
+}

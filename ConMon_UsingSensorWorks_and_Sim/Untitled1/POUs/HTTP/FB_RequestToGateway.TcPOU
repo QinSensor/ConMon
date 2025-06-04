@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FB_RequestToGateway" Id="{b7ff49b1-370c-4ec9-8689-711527eb7123}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RequestToGateway
+VAR_INPUT
+    bExecute            : BOOL;
+    eRequestType        : E_RequestType;
+    strIPAddress        : STRING;
+    nPortNumber         : UINT;
+    iRequestDeviceIndex : UINT;
+    strDeviceID         : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING;
+
+END_VAR
+VAR_IN_OUT
+    fbClient : FB_IotHttpClient;
+END_VAR
+VAR_OUTPUT
+    bDone      : BOOL;
+    bBusy      : BOOL;
+    bError     : BOOL;
+    eErrorCode : E_TalkToGateway_Err;
+    sContent   : STRING(80);
+
+END_VAR
+VAR
+    fbRequest : FB_IotHttpRequest;
+    fbJson    : FB_JsonDomParser;
+
+    nReqCount  : UDINT;
+    strRequest : STRING;
+
+    step              : E_RequestType;
+    buffstrRequest    : STRING;
+    bGetContentResult : BOOL;
+    jsonDoc           : SJsonValue;
+    nResCount         : UDINT;
+    nValidResCount    : UDINT;
+    nErrCount         : UDINT;
+
+	strRequestOutput: STRING(255);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// NOT IMPLEMENTED YET
+CASE step OF
+
+    eIdle:
+
+        IF bExecute THEN
+			bError := FALSE;   // Qin
+   		    eErrorCode := 0; // Reset error state
+			//strRequestOutput := CONCAT('IP: ', CONCAT(strIPAddress, CONCAT(' / Error: ', INT_TO_STRING(eErrorCode))));   // for bebug
+
+		
+            IF (iRequestDeviceIndex < 1) OR (iRequestDeviceIndex > GVL_Const.cMaxVibrationDevices) THEN
+                eErrorCode := e_DeviceIDOutsideLimits;
+                step       := eERROR;
+            ELSIF strDeviceID[iRequestDeviceIndex] = '' THEN
+                eErrorCode := e_DeviceIDNotFound;
+                step       := eERROR;
+            ELSE
+
+                step := eRequestType;
+            END_IF
+        END_IF
+
+    (**** This could be implemented in various ways ****)
+    (**** depending on what you prefer, here are some quick examples ****)
+
+    eSampleRate:
+        buffstrRequest := CONCAT('/device/', strDeviceID[iRequestDeviceIndex]);
+        strRequest     := CONCAT(buffstrRequest, '/parameter/sample_rate');
+        step           := eRequestSend;
+
+    eTraceLen:
+        buffstrRequest := CONCAT('/device/', strDeviceID[iRequestDeviceIndex]);
+        strRequest     := CONCAT(buffstrRequest, '/parameter/tracelen');
+        step           := eRequestSend;
+
+    eMode:
+        buffstrRequest := CONCAT('/device/', strDeviceID[iRequestDeviceIndex]);
+        strRequest     := CONCAT(buffstrRequest, '/parameter/mode');
+        step           := eRequestSend;
+	
+	eViewRequest:   // Qin
+       // buffstrRequest := CONCAT('/view/', strDeviceID[iRequestDeviceIndex]);
+       // strRequest     := CONCAT(buffstrRequest, '/1');    // get HTML file
+		buffstrRequest := CONCAT('/device/', strDeviceID[iRequestDeviceIndex]);
+		strRequest     := CONCAT(buffstrRequest, '/cache/latest');
+
+		
+        step           := eRequestSend;
+
+    (********* End of string building *********)
+    eRequestSend:
+        IF fbRequest.SendRequest(sUri         := strRequest,
+                                 fbClient     := fbClient,
+                                 eRequestType := ETcIotHttpRequestType.HTTP_Get,
+                                 0,
+                                 0,
+                                 0) THEN
+            step      := eGetData;
+            nReqCount := nReqCount + 1;
+            bBusy     := TRUE;
+            bError    := FALSE;
+        END_IF
+
+    eGetData:
+        IF NOT fbRequest.bBusy THEN
+            bError := TRUE;
+
+            IF NOT fbRequest.bError THEN
+                bGetContentResult := fbRequest.GetContent(pContent            := ADR(sContent),
+                                                          nContentSize        := SIZEOF(sContent),
+                                                          bSetNullTermination := TRUE);
+
+                IF fbRequest.nStatusCode >= 200 AND fbRequest.nStatusCode < 300 THEN
+                    jsonDoc := fbRequest.GetJsonDomContent(fbJson);
+
+                    IF jsonDoc <> 0 THEN
+                        (**** Process data for which member is desired ****)
+                        step := eProcess;
+                        (********)
+                        nValidResCount := nValidResCount + 1;
+                        bError         := FALSE;
+                    END_IF
+
+                    nResCount := nResCount + 1;
+                END_IF
+            END_IF
+
+            IF bError THEN
+                nErrCount  := nErrCount + 1;
+                bBusy      := FALSE;
+                eErrorCode := e_JSONRequestError;
+                step       := eERROR;
+            END_IF
+        END_IF
+
+    eProcess:
+        bBusy := FALSE;
+        step  := eIdle;
+
+    eERROR:
+// Error handling
+
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="FB_RequestToGateway">
+      <LineId Id="1198" Count="5" />
+      <LineId Id="1333" Count="0" />
+      <LineId Id="1335" Count="0" />
+      <LineId Id="1340" Count="0" />
+      <LineId Id="1337" Count="0" />
+      <LineId Id="1334" Count="0" />
+      <LineId Id="1204" Count="28" />
+      <LineId Id="1324" Count="0" />
+      <LineId Id="1326" Count="2" />
+      <LineId Id="1331" Count="1" />
+      <LineId Id="1329" Count="1" />
+      <LineId Id="1325" Count="0" />
+      <LineId Id="1233" Count="53" />
+      <LineId Id="48" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

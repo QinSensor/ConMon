@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Task Name="HTTP_Task" Id="{c7f4addc-7b91-4e9f-b608-7edcd3402aac}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>10000</CycleTime>
+    <Priority>20</Priority>
+    <PouCall>
+      <Name>TalkToRest</Name>
+    </PouCall>
+    <TaskFBGuid>{f5aee399-a7db-4512-af79-a92c5962f840}</TaskFBGuid>
+    <Fb_init>{f01b9a72-0947-46e7-ae79-506e360347d4}</Fb_init>
+    <Fb_exit>{799abb4a-9688-431c-8be5-9a9ff724805e}</Fb_exit>
+    <CycleUpdate>{066b35d8-970a-44e6-b8dc-7204b45c5b42}</CycleUpdate>
+    <PostCycleUpdate>{82e62827-28b4-4dc3-b986-d47d4dbf9758}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

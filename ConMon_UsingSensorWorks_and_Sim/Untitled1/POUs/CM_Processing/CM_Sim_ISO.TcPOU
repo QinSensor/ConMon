@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="CM_Sim_ISO" Id="{08d60871-3ca2-4a35-a1d2-0b7f360cb665}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM CM_Sim_ISO
+VAR CONSTANT
+		cInitIntRMS 	: ST_CM_IntegratedRMS_InitPars   := (	nFFT_Length := GVL_Const.cFFTLength, 
+															nWindowLength := GVL_Const.cWindowLength,
+															fSampleRate := GVL_Const.cFSample,
+		 													fLowerFrequencyLimit := GVL_Const.cfLowerFrequencyLimit,
+															fUpperFrequencyLimit := GVL_Const.cfUpperFrequencyLimit,
+															nOrder := GVL_Const.cOrderRMS,
+															nChannels := GVL_Const.cChannels,                        
+															eWindowType := E_CM_WindowType.eCM_HannWindow, 
+															bTransformToDecibel:= FALSE);		
+
+END_VAR
+VAR
+		fbRMS				: FB_CMA_IntegratedRMS  	  :=(	stInitPars := cInitIntRMS, 
+															nOwnID := eID_SimISO, 
+															aDestIDs := [eID_SimSinkISO] );
+
+	fbErrHist			: FB_HRErrHist; // error monitoring
+
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Call RMS
+fbRMS.Call();
+
+IF fbRMS.bError THEN
+	fbErrHist.AddError(bErr:=TRUE, hrErrCode:=fbRMS.hrErrorCode, sErrSource:='CM_Sim_ISO.fbRMS'); // error monitoring
+	// ToDo: if error
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="CM_Sim_ISO">
+      <LineId Id="30" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

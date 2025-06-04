@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="CM_SensorWorks_Sensor2ISO" Id="{3f5b1525-10ae-4e41-b4dc-ff0682a8627d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM CM_SensorWorks_Sensor2ISO
+
+VAR CONSTANT
+    cInitIntRMS : ST_CM_IntegratedRMS_InitPars := (nFFT_Length          := GVL_Const.cSensorPacket,
+                                                   nWindowLength        := GVL_Const.cSensorPacket,
+                                                   fSampleRate          := GVL_Const.cSensorSampleRate, // packets per second, sample time is 2s
+                                                   fLowerFrequencyLimit := 10,
+                                                   fUpperFrequencyLimit := 100, // needs to be less than half of the sample rate
+                                                   nMaxBands            := 1,
+                                                   nOrder               := 2,
+                                                   nChannels            := 1,
+                                                   eWindowType          := E_CM_WindowType.eCM_HannWindow,
+                                                   nOverlap             := 0,
+                                                   bTransformToDecibel  := FALSE);
+
+END_VAR
+
+VAR
+    fbRMS : FB_CMA_IntegratedRMS := (stInitPars     := cInitIntRMS,
+                                     nOwnID         := eID_SW_ISO_Device_2,
+                                     aDestIDs       := [eID_SW_Sink_Device_2],
+                                     nResultBuffers := 4);
+
+    bInit    : BOOL                 := TRUE;
+    aBands   : ARRAY[1..2] OF LREAL := [10.0, 100.0];
+    hResInit : HRESULT;
+
+    fbErrHist : FB_HRErrHist; // error monitoring
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bInit THEN
+    hResInit := fbRms.Configure(pArg := ADR(aBands), nArgSize := SIZEOF(aBands));
+    bInit    := FALSE;
+END_IF
+
+// Call RMS
+fbRMS.Call();
+
+IF fbRMS.bError THEN
+    fbErrHist.AddError(bErr := TRUE, hrErrCode := fbRMS.hrErrorCode, sErrSource := 'CM_SensorWorks_Sensor2ISO.fbRMS'); // error monitoring
+    // ToDo: if error
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="CM_SensorWorks_Sensor2ISO">
+      <LineId Id="186" Count="10" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

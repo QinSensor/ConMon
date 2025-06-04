@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="E_AnalysisIDs" Id="{6da00e75-811a-45e4-808f-9e4fa9a1f0be}">
+    <Declaration><![CDATA[TYPE
+    E_AnalysisIDs :
+    (
+        (* analysis chain *)
+        eID_SimSource := 1,
+        eID_SimISO,
+        eID_SimSinkISO,
+        eID_SimSpectrumCh1,
+        eID_SimSpectrumCh2,
+        eID_SimSinkSpectrumCh1,
+        eID_SimSinkSpectrumCh2,
+        eID_SensorWorksSource,
+        eID_SensorWorksISO,
+        eID_SensorWorksSpectrum,
+        eID_SensorWorksSinkISO,
+        eID_SensorWorkSinkSpectrum,
+        eID_SW_Source_Device_1,
+        eID_SW_ISO_Device_1,
+        eID_SW_Sink_Device_1,
+        eID_SW_Source_Device_2,
+        eID_SW_ISO_Device_2,
+        eID_SW_Sink_Device_2
+    ) UDINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

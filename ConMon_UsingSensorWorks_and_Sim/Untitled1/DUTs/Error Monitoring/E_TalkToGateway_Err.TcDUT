@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="E_TalkToGateway_Err" Id="{635f7ad4-042c-41e7-bd5f-1e19928fc21b}">
+    <Declaration><![CDATA[
+TYPE
+    E_TalkToGateway_Err :
+    (
+        e_NoIPAddress           := 10,
+        e_NoPortNumber          := 20,
+        e_NoDeviceID            := 30,
+        e_DeviceIDOutsideLimits := 31,
+        e_DeviceIDNotFound      := 32,
+		e_JSONRequestError		:= 40
+        );
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

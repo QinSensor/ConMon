@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FB_TalkToGateway" Id="{8002e759-f379-458e-a252-48d08e5d47a8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TalkToGateway
+VAR_INPUT
+    strIPAddress        : STRING;
+    nPortNumber         : UINT;
+    strDeviceID         : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING;
+    bStopConnection     : BOOL;
+    bResetError         : BOOL;
+    bSendRequest        : BOOL; // NOT IMPLEMENTED YET
+    eRequestType        : E_RequestType; // NOT IMPLEMENTED YET
+    iRequestDeviceIndex : UINT; // NOT IMPLEMENTED YET
+    tPollTime           : TIME;
+END_VAR
+VAR_OUTPUT
+    bError           : BOOL;
+    fbErrHist        : FB_HRErrHist; // error monitoring	
+    aDeviceResponse  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF ST_ReceivedData; // data from device
+    strRequestOutput : STRING; // NOT IMPLEMENTED YET
+	bProcessingRequest : BOOL;
+
+END_VAR
+VAR
+    fbHttpClient : FB_IotHttpClient := (bKeepAlive         := TRUE,
+                                        tConnectionTimeout := T#10S);
+    fbGetDataFromHTTPAddr : GetDataFromSensorWorksHTTP;
+    PollTimer             : TON;
+    bGetData              : BOOL;
+    i                     : UINT;
+    nNumDevices           : UINT;
+    bExecuteSend          : BOOL;
+    strRequest            : STRING;
+    buffstrRequest        : STRING;
+    fbGateWayRequest      : FB_RequestToGateway;
+
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bSendRequest THEN
+    fbGateWayRequest(
+        bExecute            := TRUE,
+        eRequestType        := eRequestType,
+        strIPAddress        := strIPAddress,
+        nPortNumber         := nPortNumber,
+        //iRequestDeviceIndex := iRequestDeviceIndex,
+		iRequestDeviceIndex := 1,
+        strDeviceID         := strDeviceID,
+        fbClient            := fbHttpClient
+    );
+END_IF;
+
+
+(**** ERROR HANDLING - NOT COMPLETED, NO RESET IMPLEMENTED YET ****)
+
+IF strIPAddress = '' THEN
+    fbErrHist.AddError(bErr := TRUE, hrErrCode := e_NoIPAddress, sErrSource := 'IP Address');
+    bError := TRUE;
+END_IF
+
+
+IF nPortNumber = 0 THEN
+    fbErrHist.AddError(bErr := TRUE, hrErrCode := e_NoPortNumber, sErrSource := 'Port Number');
+    bError := TRUE;
+END_IF
+
+// Update connection details on disconnection
+IF NOT fbHttpClient.bConfigured THEN
+    fbHttpClient.sHostName := strIPAddress;
+    fbHttpClient.nHostPort := nPortNumber;
+    PollTimer.PT           := tPollTime;
+END_IF
+
+IF PollTimer.Q THEN // Normal data aqcuisition 
+    bGetData := TRUE;
+    i        := 1;
+END_IF
+
+IF bGetData THEN
+    IF i > GVL_Const.cMaxVibrationDevices THEN
+        bGetData := FALSE;
+    ELSE
+
+        IF strDeviceID[i] <> '' AND NOT fbGetDataFromHTTPAddr.bBusy THEN
+            buffstrRequest := CONCAT('/device/', strDeviceID[i]);
+            strRequest     := CONCAT(buffstrRequest, '/cache/latest'); // Builds up request to ask for data
+
+            bExecuteSend := TRUE;
+        ELSIF strDeviceID[i] = '' AND NOT fbGetDataFromHTTPAddr.bBusy THEN
+            i            := i + 1; // Look for next array point
+            strRequest   := '';    // clear
+            bExecuteSend := FALSE;
+        END_IF
+
+        fbGetDataFromHTTPAddr(bSend := bExecuteSend, fbClient := fbHttpClient, strRequest := strRequest); // Function block to call the request for data
+
+        IF fbGetDataFromHTTPAddr.bBusy AND bExecuteSend THEN
+            bExecuteSend := FALSE; //reset trigger for next cycle, input above requires rising edge	
+        END_IF
+
+        IF NOT fbGetDataFromHTTPAddr.bBusy AND NOT fbGetDataFromHTTPAddr.bError AND strDeviceID[i] <> '' THEN
+            aDeviceResponse[i] := fbGetDataFromHTTPAddr.jsonObatinedData;
+            i                  := i + 1; // Look for next array point
+        END_IF
+    END_IF
+END_IF
+
+(****** Not finished, do not use ******
+IF fbHttpClient.bConfigured AND bSendRequest AND NOT fbGateWayRequest.bBusy THEN
+    fbGateWayRequest.bExecute            := TRUE;
+    fbGateWayRequest.eRequestType        := eRequestType;
+    fbGateWayRequest.strIPAddress        := strIPAddress;
+    fbGateWayRequest.nPortNumber         := nPortNumber;
+    fbGateWayRequest.iRequestDeviceIndex := iRequestDeviceIndex;
+    fbGateWayRequest.strDeviceID         := strDeviceID;
+ELSIF fbHttpClient.bConfigured AND bSendRequest AND fbGateWayRequest.bBusy THEN
+    fbGateWayRequest.bExecute := FALSE;
+
+END_IF
+
+****** END OF COMMENT *****)
+
+IF bStopConnection AND fbHttpClient.bConfigured THEN
+    fbHttpClient.Disconnect();
+ELSE
+    fbHttpClient.Execute();
+END_IF
+
+PollTimer(IN := fbHttpClient.bConfigured AND NOT PollTimer.Q);
+
+fbGateWayRequest(fbClient := fbHttpClient);
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_TalkToGateway">
+      <LineId Id="1374" Count="6" />
+      <LineId Id="1385" Count="0" />
+      <LineId Id="1381" Count="2" />
+      <LineId Id="1372" Count="1" />
+      <LineId Id="1294" Count="0" />
+      <LineId Id="1250" Count="0" />
+      <LineId Id="1386" Count="0" />
+      <LineId Id="1139" Count="3" />
+      <LineId Id="1387" Count="0" />
+      <LineId Id="1143" Count="31" />
+      <LineId Id="1176" Count="13" />
+      <LineId Id="1247" Count="0" />
+      <LineId Id="1190" Count="11" />
+      <LineId Id="1248" Count="1" />
+      <LineId Id="1202" Count="9" />
+      <LineId Id="430" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

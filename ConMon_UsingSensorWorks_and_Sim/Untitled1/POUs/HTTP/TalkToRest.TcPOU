@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TalkToRest" Id="{377abd95-6be4-484f-9188-23a92b2bdb5d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TalkToRest
+VAR
+    // trigger command execution for OpenWeatherMap samples
+    bGetData : BOOL;
+    //	strIPAddress					: STRING;
+    //	strIPAddress					: STRING := '10.200.110.194';
+    //	strIPAddress					: STRING := '192.168.1.248';
+    strRequest : STRING; //'/device/d5:d0:f9:30:83:d7/cache/latest';
+
+    fbHttpClientVibGateway : FB_IotHttpClient := (sHostName          := GLOBAL.strIPAddress,
+                                                  bKeepAlive         := TRUE,
+                                                  tConnectionTimeout := T#10S);
+
+    fbGetDataFromHTTPAddr : GetDataFromSensorWorksHTTP;
+    bStopConnection       : BOOL;
+    buffstrRequest        : STRING(255);
+    bInit                 : BOOL := TRUE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bInit THEN
+    IF GLOBAL.strIPAddress = '' THEN
+        GLOBAL.strIPAddress := '192.168.4.44';
+    END_IF
+
+    IF GLOBAL.nPortNumber = 0 THEN
+        GLOBAL.nPortNumber := 8080;
+    END_IF
+
+(*    IF GLOBAL.strDeviceID = '' THEN
+        GLOBAL.strDeviceID := 'd5:d0:f9:30:83:d7';
+    END_IF
+*)
+
+    bInit := FALSE;
+END_IF
+
+//init client parameters at startup
+IF NOT fbHttpClientVibGateway.bConfigured THEN
+    fbHttpClientVibGateway.sHostName := GLOBAL.strIPAddress;
+    fbHttpClientVibGateway.nHostPort := GLOBAL.nPortNumber;
+    // '/device/' + strDeviceID + '/cache/latest'
+  //  buffstrRequest := Tc2_Standard.CONCAT('/device/', GLOBAL.strDeviceID);
+    strRequest     := Tc2_Standard.CONCAT(buffstrRequest, '/cache/latest');
+    //    fbHttpClientVibGateway.stTLS.bNoServerCertCheck:= FALSE;
+END_IF
+
+IF fbHttpClientVibGateway.bConfigured THEN
+    IF NOT bGetData AND NOT fbGetDataFromHTTPAddr.bSend THEN
+        bGetData := TRUE;
+    END_IF
+
+    fbGetDataFromHTTPAddr(bSend := bGetData, fbClient := fbHttpClientVibGateway, strRequest := strRequest);
+END_IF
+
+IF bStopConnection AND fbHttpClientVibGateway.bConfigured THEN
+    fbHttpClientVibGateway.Disconnect();
+ELSE
+    fbHttpClientVibGateway.Execute();
+END_IF
+
+IF bGetData AND NOT fbGetDataFromHTTPAddr.bBusy AND NOT fbGetDataFromHTTPAddr.bError THEN
+    bGetData                           := FALSE;
+  //  GLOBAL.stSensorWorksHTTPSensorData := fbGetDataFromHTTPAddr.jsonObatinedData;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="TalkToRest">
+      <LineId Id="157" Count="11" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="169" Count="31" />
+      <LineId Id="81" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="CM_SensorWorks_Sensor1" Id="{740601ee-8fda-45bc-8183-61f55fa3357d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM CM_SensorWorks_Sensor1
+VAR CONSTANT
+		    cInitSource			: ST_MA_MultiArray_InitPars 
+							:= ( eTypeCode := eMA_TypeCode_LREAL, nDims := 2, aDimSizes := [GVL_Const.cSensorSampleChannels,GVL_Const.cSensorPacket]);
+
+END_VAR
+VAR
+		(* Input from aSimBuffer to fbSource *)
+	fbSource_SensorWorks			: FB_CMA_Source :=(	stInitPars := cInitSource, 
+											nOwnID := eID_SW_Source_Device_1, 
+											aDestIDs := [eID_SW_ISO_Device_1],
+											nResultBuffers := 4);		// Initialize source buffers
+
+											//aDestIDs := [eID_SensorWorksISO,eID_SensorWorksSpectrum]);
+	
+	fbSinkISO						: FB_CMA_Sink := (nOwnID := eID_SW_Sink_Device_1);
+//	fbSinkMagSpec					: FB_CMA_Sink := (nOwnID := eID_SensorWorkSinkSpectrum);
+
+	fbErrHist						: FB_HRErrHist; // error monitoring	
+
+	(* Calculate triggers *)
+	bCalculateISO					: BOOL;
+	
+	(* Buffer variables for calculation *)
+	Ch1VelRMS 						: LREAL;
+	Ch1DisplRMS 					: LREAL;
+	Ch1AccRMS: LREAL;
+
+	Ch2VelRMS 						: LREAL;
+	Ch2DisplRMS 					: LREAL;
+	Ch2AccRMS: LREAL;
+
+	(* output *)
+	ISO_10816_Classification AT%Q* : E_IsoClass;
+	
+	intMachineSelected: USINT := 1;
+	intElasticitySelected: USINT :=1;
+	
+	(* Classify calculated RMS values *)
+	nCountResults		  : ULINT;	
+	bCalculate			  : BOOL;
+	nChannel              : UDINT;
+	ISOClassIs_Vel        : E_IsoClass;
+	ISOClassIs_Displ      : E_IsoClass;	
+
+	bNewSensorDataAvailable: BOOL := TRUE;
+	i: UDINT;
+	testwave: FB_FunctionGenerator_1;
+	testfq: LREAL := 400;
+	fSetAmplitude1: LREAL := 10;
+	strOldTS: STRING;
+END_VAR
+
+VAR CONSTANT
+	MachineDisplISOClassLimit: E_IsoClass := 3;
+	MachineVelISOClassLimit: E_IsoClass := 3;
+END_VAR
+
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Collect raw data and send it for calculation *)
+SourceData();
+
+(* Get results from RMS *)
+SinkData();
+
+(* Classify the data *)
+Classification();
+]]></ST>
+    </Implementation>
+    <Action Name="Classification" Id="{3620a811-b5b8-48dd-a8a1-a36868e7e5ee}">
+      <Implementation>
+        <ST><![CDATA[// define class according to ISO 10816-3 based on velocity and displacement data for each measurement channel
+IF bCalculateISO THEN
+	Ch1AccRMS := GLOBAL.aSensorWorkISOHTTPResult[1][1];
+	Ch1VelRMS := GLOBAL.aSensorWorkISOHTTPResult[1][2];
+	Ch1DisplRMS := GLOBAL.aSensorWorkISOHTTPResult[1][3];
+
+	
+	IF NOT lrealisnan(Ch1VelRMS) THEN 
+
+		nCountResults := fbSinkISO.nCntResults;
+		
+
+			
+			// evaluate velocity data
+			ISOClassIs_Vel := E_IsoClass.A;
+			IF GLOBAL.aSensorWorkISOHTTPResult[1][2] > GVL_Const.cISOClassDef_Velocity[intMachineSelected,intElasticitySelected,3] THEN
+				ISOClassIs_Vel := E_IsoClass.D;
+			ELSIF GLOBAL.aSensorWorkISOHTTPResult[1][2] > GVL_Const.cISOClassDef_Velocity[intMachineSelected,intElasticitySelected,2] THEN
+				ISOClassIs_Vel := E_IsoClass.C;
+			ELSIF GLOBAL.aSensorWorkISOHTTPResult[1][2] > GVL_Const.cISOClassDef_Velocity[intMachineSelected,intElasticitySelected,1] THEN
+				ISOClassIs_Vel := E_IsoClass.B;
+			END_IF;  
+			
+			// evaluate displacement data
+			ISOClassIs_Displ := E_IsoClass.A;
+			IF GLOBAL.aSensorWorkISOHTTPResult[1][3] > GVL_Const.cISOClassDef_Displ[intMachineSelected,intElasticitySelected,3] THEN
+				ISOClassIs_Displ := E_IsoClass.D;
+			ELSIF GLOBAL.aSensorWorkISOHTTPResult[1][3] > GVL_Const.cISOClassDef_Displ[intMachineSelected,intElasticitySelected,2] THEN
+				ISOClassIs_Displ := E_IsoClass.C;
+			ELSIF GLOBAL.aSensorWorkISOHTTPResult[1][3] > GVL_Const.cISOClassDef_Displ[intMachineSelected,intElasticitySelected,1] THEN
+				ISOClassIs_Displ := E_IsoClass.B;
+			END_IF;	
+									
+		
+		// according to ISO 10816-3 select worst case 		
+		ISO_10816_Classification := E_IsoClass.A;
+			IF ISOClassIs_Vel >  ISO_10816_Classification THEN
+				ISO_10816_Classification := ISOClassIs_Vel;
+			END_IF
+			IF ISOClassIs_Displ >  ISO_10816_Classification THEN
+				ISO_10816_Classification := ISOClassIs_Displ;
+			END_IF
+
+		
+	ELSE
+		// result is NaN... code here what to do. 
+		
+	END_IF;
+	
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="SinkData" Id="{bd783dc8-ea11-496c-8267-1174375fd31d}">
+      <Implementation>
+        <ST><![CDATA[(* Push results to sink *)
+fbSinkISO.Output2DStd(	pDataOut 		:= ADR(GLOBAL.aSensorWorkISOHTTPResult[1]), 
+					nDataOutSize 	:= SIZEOF(GLOBAL.aSensorWorkISOHTTPResult[1]), 
+					eElementType 	:= eMA_TypeCode_LREAL, 
+					nOptionPars		:= 0,
+					
+					bNewResult		=> bCalculateISO );
+					
+IF fbSinkISO.bError THEN
+	fbErrHist.AddError(bErr:=TRUE, hrErrCode:=fbSinkISO.hrErrorCode, sErrSource:='CM_SensorWorks_Sensor1.fbSinkISO'); // error monitoring
+	// ToDo: if error
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="SourceData" Id="{b7ec4907-481d-4443-b433-72bfd5c0b6c3}">
+      <Implementation>
+        <ST><![CDATA[
+IF GLOBAL.stSensorWorksHTTPSensorData[1].timestamp <> strOldTS THEN
+    FOR i := 1 TO GVL_Const.cSensorPacket DO
+        GLOBAL.aSensorWorksHTTPInput[1][i] := GLOBAL.stSensorWorksHTTPSensorData[1].value[i] * GLOBAL.stSensorWorksHTTPSensorData[1].calibration;
+    END_FOR
+
+    bNewSensorDataAvailable := TRUE;
+END_IF
+
+// Collection
+IF bNewSensorDataAvailable THEN
+    // Check to make sure code works
+    (*	
+	testwave(
+	
+			bEnable:= TRUE, 
+			fFrequency 	:= testfq,
+			fAmplitude 	:= 100,
+			eFunction 	:= E_FunctionType.Sine,
+			aSignal		:= GLOBAL.aSensorWorksHTTPInput[1]);	
+	// end of signal generation
+*)
+
+    fbSource_SensorWorks.Input2DStd(pDataIn      := ADR(GLOBAL.aSensorWorksHTTPInput[1]),
+                                    nDataInSize  := SIZEOF(GLOBAL.aSensorWorksHTTPInput[1]),
+                                    eElementType := eMA_TypeCode_LREAL,
+                                    nOptionPars  := Tc3_CM.cCMA_Option_MarkInterruption);
+
+    bNewSensorDataAvailable := FALSE; // reset flag
+    //testwave.bEnable := FALSE;
+END_IF
+
+// Check for errors
+IF fbSource_SensorWorks.bError THEN
+    fbErrHist.AddError(bErr := TRUE, hrErrCode := fbSource_SensorWorks.hrErrorCode, sErrSource := 'CM_SensorWorks_Sensor1.SourceData');
+END_IF
+
+strOldTS := GLOBAL.stSensorWorksHTTPSensorData[1].timestamp;]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="CM_SensorWorks_Sensor1">
+      <LineId Id="79" Count="7" />
+      <LineId Id="77" Count="0" />
+    </LineIds>
+    <LineIds Name="CM_SensorWorks_Sensor1.Classification">
+      <LineId Id="2" Count="4" />
+      <LineId Id="9" Count="5" />
+      <LineId Id="16" Count="21" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="43" Count="5" />
+      <LineId Id="52" Count="6" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="CM_SensorWorks_Sensor1.SinkData">
+      <LineId Id="2" Count="3" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="13" Count="3" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="CM_SensorWorks_Sensor1.SourceData">
+      <LineId Id="112" Count="36" />
+      <LineId Id="68" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

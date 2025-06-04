@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Task Name="CM_Process_Task" Id="{173637c7-0cd5-4e5c-b962-e9971c8a31fa}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>50000</CycleTime>
+    <Priority>4</Priority>
+    <PouCall>
+      <Name>CM_Sim_ISO</Name>
+    </PouCall>
+    <PouCall>
+      <Name>CM_SensorWorks_Sensor1ISO</Name>
+    </PouCall>
+    <PouCall>
+      <Name>CM_SensorWorks_Sensor2ISO</Name>
+    </PouCall>
+    <TaskFBGuid>{352b8652-d667-4dfd-8027-7488e0d56d90}</TaskFBGuid>
+    <Fb_init>{2540f87b-a1a3-4c77-b873-d896f6e24bbf}</Fb_init>
+    <Fb_exit>{a1cccaaa-49bf-4d90-b39f-7bf4cd829ebb}</Fb_exit>
+    <CycleUpdate>{32e96292-a44b-4968-b51e-2ce4bf0ce3e9}</CycleUpdate>
+    <PostCycleUpdate>{a5d26285-a1e1-4381-b785-46077ed1bb4a}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

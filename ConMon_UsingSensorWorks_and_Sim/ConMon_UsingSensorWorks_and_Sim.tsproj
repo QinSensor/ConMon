@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.66">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{630B5E83-F079-E233-8B43-D407BABF5B04}" AutoDeleteType="true">E_IsoClass</Name>
+			<Comment><![CDATA[ ISO Classes ]]></Comment>
+			<BitSize>32</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+			<EnumInfo>
+				<Text><![CDATA[A]]></Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[B]]></Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[C]]></Text>
+				<Enum>3</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[D]]></Text>
+				<Enum>4</Enum>
+			</EnumInfo>
+			<Properties>
+				<Property>
+					<Name>qualified_only</Name>
+				</Property>
+				<Property>
+					<Name>generate_implicit_init_function</Name>
+				</Property>
+			</Properties>
+		</DataType>
+	</DataTypes>
+	<Project ProjectGUID="{B1CA3CB2-A2F3-4DF7-B3EF-166DE202C398}" Target64Bit="true" ShowHideConfigurations="#x106">
+		<System>
+			<Settings MaxCpus="20" RouterMemory="67108864">
+				<Cpu/>
+				<Cpu CpuId="1"/>
+				<IoIdleTask Affinity="#x00000001"/>
+			</Settings>
+			<Licenses>
+				<Target>
+					<ManualSelect>{4989A799-AEEA-4FEE-88EF-666B99EEFB45}</ManualSelect>
+					<ManualSelect>{27326EE5-AB30-4084-B15B-8CCA96CCBF0B}</ManualSelect>
+					<ManualSelect>{3DDCAB25-BF0E-412C-A721-DC77C1B8099C}</ManualSelect>
+					<ManualSelect>{2752D285-16AD-4E89-AE6C-80E72784D264}</ManualSelect>
+				</Target>
+			</Licenses>
+			<Tasks>
+				<Task Id="4" Priority="10" CycleTime="50000" AmsPort="350" Affinity="#x00000001" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+				<Task Id="5" Priority="4" CycleTime="500000" AmsPort="351" Affinity="#x00000001" AdtTasks="true">
+					<Name>CM_Process_Task</Name>
+				</Task>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="352" AdtTasks="true">
+					<Name>HTTP_Task</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{509EEEC8-344F-4247-8D42-CD20C1B3C8D4}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.plcproj" TmcFilePath="Untitled1\Untitled1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{BEEADC3D-7FB0-3EFC-33B6-A3531685DC54}">
+					<Name>Untitled1 Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>CM_Sim.ISO_10816_Classification</Name>
+							<Comment><![CDATA[ output ]]></Comment>
+							<Type GUID="{630B5E83-F079-E233-8B43-D407BABF5B04}">E_IsoClass</Type>
+						</Var>
+						<Var>
+							<Name>CM_SensorWorks_Sensor1.ISO_10816_Classification</Name>
+							<Comment><![CDATA[ output ]]></Comment>
+							<Type GUID="{630B5E83-F079-E233-8B43-D407BABF5B04}">E_IsoClass</Type>
+						</Var>
+						<Var>
+							<Name>CM_SensorWorks_Sensor2.ISO_10816_Classification</Name>
+							<Comment><![CDATA[ output ]]></Comment>
+							<Type GUID="{630B5E83-F079-E233-8B43-D407BABF5B04}">E_IsoClass</Type>
+						</Var>
+					</Vars>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>CM_Process_Task</Name>
+							<ManualConfig>
+								<OTCID>#x02010050</OTCID>
+							</ManualConfig>
+							<Priority>4</Priority>
+							<CycleTime>50000000</CycleTime>
+						</Context>
+						<Context>
+							<Id>1</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010040</OTCID>
+							</ManualConfig>
+							<Priority>10</Priority>
+							<CycleTime>5000000</CycleTime>
+						</Context>
+						<Context>
+							<Id>2</Id>
+							<Name>HTTP_Task</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="4" OTCID="#x08502003"/>
+						<TaskPouOid Prio="10" OTCID="#x08502002"/>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<PlcAuxTask Affinity="#x00000001"/>
+		</Plc>
+	</Project>
+</TcSmProject>

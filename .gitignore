@@ -1,0 +1,21 @@
+# TwinCAT: Exclude build, user, and temp files
+*.tmc
+*.user
+*.sdf
+*.suo
+*.userprefs
+*.compileinfo
+*.lastbuildstate
+
+# Visual Studio
+.vs/
+*.log
+
+# TwinCAT runtime folders
+_Boot/
+_Temp/
+Logs/
+
+# Backup files
+*.bak
+*.~*

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{d123d7e0-de75-49e6-bb13-f815caf5c336}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	// Task Vars
+	nChannel: UDINT;
+	fbFunctionGenerator1	: FB_FunctionGenerator;		// Signal Generator, ch1
+	fbFunctionGenerator2	: FB_FunctionGenerator;		// Signal Generator, ch2
+	fSetFrequency1			: LREAL := 400;		        // Hz
+	fSetAmplitude1			: LREAL := 4;		        // peak amplitude of sin signal [m/s^2]
+	fSetFrequency2			: LREAL := 35;		        // Hz
+	fSetAmplitude2			: LREAL := 4;		        // peak amplitude of sin signal	[m/s^2]	
+	
+	bAddDisturbance			: BOOL;											// add fault
+	fbDisturbance1			: FB_FunctionGenerator;							// fault simulator
+	fDistAmplitude1			: LREAL	:= 5;									// fault amplitude
+	fDistFrequency1			: LREAL	:= 200;									// fault frequency (recurring)
+	fbDisturbance2			: FB_FunctionGenerator;							// fault simulator
+	fDistAmplitude2			: LREAL	:= 2;									// fault amplitude
+	fDistFrequency2			: LREAL	:= 100;									// fault frequency (recurring)
+
+	eDistFunction			: E_FunctionType :=  E_FunctionType.Square;	// fault shape
+	aDisturbance			: ARRAY[1..GVL_Const.cChannels] OF ARRAY[1..GVL_Const.cOversamples] OF LREAL;
+
+	fbRand					: DRAND;				 	
+	fRandomNumber			: LREAL;	
+	fVar					: LREAL := 0.38;
+
+	nSample					: UDINT;
+
+	fbTalkToGateway			: FB_TalkToGateway;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+// Simulated frequency generation
+fbFunctionGenerator1(fFrequency := fSetFrequency1,
+                     fAmplitude := fSetAmplitude1,
+                     eFunction  := E_FunctionType.Sine,
+                     aSignal    := GLOBAL.aSimBuffer[1]);
+
+fbFunctionGenerator2(fFrequency := fSetFrequency2,
+                     fAmplitude := fSetAmplitude2,
+                     eFunction  := E_FunctionType.Sine,
+                     aSignal    := GLOBAL.aSimBuffer[2]);
+
+IF bAddDisturbance THEN
+    // Random number generator
+    fbRand(Seed := 1000, Num => fRandomNumber);
+    (* Disturbance signal *)
+    fbDisturbance1(bEnable    := TRUE,
+                   fAmplitude := fDistAmplitude1,
+                   fFrequency := fDistFrequency1,
+                   fOffset    := 0,
+                   nDutyCycle := 2,
+                   eFunction  := eDistFunction,
+                   aSignal    := aDisturbance[1]);
+
+    fbDisturbance2(bEnable    := TRUE,
+                   fAmplitude := fDistAmplitude2,
+                   fFrequency := fDistFrequency2,
+                   fOffset    := 0,
+                   nDutyCycle := 2,
+                   eFunction  := eDistFunction,
+                   aSignal    := aDisturbance[2]);
+
+    FOR nChannel := 1 TO GVL_Const.cChannels DO
+        // Input signal with disturbance
+        FOR nSample := 1 TO GVL_Const.cOversamples DO
+            GLOBAL.aSimBuffer[nChannel][nSample] := GLOBAL.aSimBuffer[nChannel][nSample] + fRandomNumber * aDisturbance[nChannel][nSample];
+        END_FOR
+    END_FOR
+
+END_IF
+
+// Statically writing devices for ease during testing
+//GLOBAL.strDeviceID[1] := 'e0:f6:fd:c4:e3:08';
+//GLOBAL.strDeviceID[2] := 'd5:d0:f9:30:83:d7';
+
+(*fbTalkToGateway(strIPAddress        := GLOBAL.strIPAddress,
+                nPortNumber         := GLOBAL.nPortNumber,
+                strDeviceID         := GLOBAL.strDeviceID,
+                bStopConnection     :=,
+                bResetError         :=,
+                bSendRequest        :=,
+                eRequestType        :=,
+                iRequestDeviceIndex :=,
+                tPollTime           := T#1S,
+                bError              =>,
+                fbErrHist           =>,
+                aDeviceResponse     => GLOBAL.stSensorWorksHTTPSensorData,
+                strRequestOutput    =>,
+                bProcessingRequest  =>);
+				*)
+
+// Instance call to FB_TalkToGateway
+fbTalkToGateway(
+    strIPAddress        := GLOBAL.strIPAddress,
+    nPortNumber         := GLOBAL.nPortNumber,
+    strDeviceID         := GLOBAL.strDeviceID,
+    bStopConnection     := FALSE,                                  // TODO: Set logic to stop the connection when needed
+    bResetError         := FALSE,                                  // TODO: Link to a button or watchdog to reset error
+    bSendRequest        := TRUE,                                   // Should be controlled by a trigger condition
+    eRequestType := E_RequestType.eViewRequest,
+	//eRequestType        := E_RequestType.eGetData,              // Replace with actual enum value as needed
+    iRequestDeviceIndex := 1,                                      // Index of the device to talk to (1 or 2)
+    tPollTime           := T#1S,
+    bError              => GLOBAL.bCommError,                      // Assign your error flag
+//    fbErrHist           => GLOBAL.fbCommErrHist,                   // Optional: instantiate this function block globally
+    aDeviceResponse     => GLOBAL.stSensorWorksHTTPSensorData,    // Structure to receive sensor data
+    strRequestOutput    => GLOBAL.strLastRequestOutput,           // Optional: use to log or debug request payloads
+    bProcessingRequest  => GLOBAL.bIsProcessingRequest            // Track request state
+);
+
+// Cyclic Program Calls
+CM_Sim();
+CM_SensorWorks_Sensor1();
+CM_SensorWorks_Sensor2();
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="228" Count="43" />
+      <LineId Id="340" Count="13" />
+      <LineId Id="339" Count="0" />
+      <LineId Id="354" Count="0" />
+      <LineId Id="272" Count="0" />
+      <LineId Id="323" Count="8" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="332" Count="6" />
+      <LineId Id="286" Count="5" />
+      <LineId Id="111" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

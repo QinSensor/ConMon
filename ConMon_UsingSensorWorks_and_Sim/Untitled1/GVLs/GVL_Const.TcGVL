@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL_Const" Id="{d3365c5c-a78d-428f-97fc-b0903d770531}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+
+    cFSample      : UDINT := 10000; // 1ms task with 10 oversamples = 10kHz
+    cMaxBins      : UDINT := 100;
+    cMaxQuantiles : UDINT := 2;
+    cMaxClasses   : UDINT := 3; // Normal, Warning, Alarm		
+
+    // define frequency interval according to ISO 10816-3
+    // e.g. 10 .. 1000 Hz for rotating speed over 600r/min
+    cfLowerFrequencyLimit : UDINT := 10;
+    cfUpperFrequencyLimit : UDINT := 1000;
+
+    // Parameters for RMS calculation
+    cOrderRMS      : UDINT := 2;             // ISO 10816-3 requires velocity and displacement, if measured using accelerometer we need to integrate 2 times
+    cChannels      : UDINT := 2;             // ISO 10816-3 says 2 orthogonal sensors per measurement location-> 2 channels
+    cResult_Length : UDINT := cOrderRMS + 1; // nOrder+1
+    cSensorSampleChannels
+        : UDINT := 1;
+
+    // Classes according to ISO:
+    // machine, elasticty, value
+    cISOClassDef_Velocity : ARRAY[1..2, 1..2, 1..3] OF LREAL := [0.0023,
+                                                                 0.0045,
+                                                                 0.0071,
+                                                                 0.0035,
+                                                                 0.0071,
+                                                                 0.011,
+                                                                 0.0014,
+                                                                 0.0028,
+                                                                 0.0045,
+                                                                 0.0023,
+                                                                 0.0045,
+                                                                 0.0071];
+    cISOClassDef_Displ : ARRAY[1..2, 1..2, 1..3] OF LREAL := [2.9E-05,
+                                                              5.7E-05,
+                                                              9E-05,
+                                                              4.5E-05,
+                                                              9E-05,
+                                                              0.00014,
+                                                              2.2E-05,
+                                                              4.5E-05,
+                                                              7.1E-05,
+                                                              3.7E-05,
+                                                              7.1E-05,
+                                                              0.000113];
+
+    // optional constants if real sensors are applied
+    cGravitationalAcc : LREAL := 9.81;  // 1 g approx 9.81 m/s^2 -> physical constant
+    cSensitivity      : LREAL := 0.01;  // [in Volts/g] depends on sensor used in application, e.g. 10 mV/g
+    cMeasurementRange : LREAL := 5;     // +-5 Volts (EL3632)
+    cResolution       : LREAL := 32768; // 2^15 (15 bits resolution + 1 bit sign) (EL3632)
+    cScale            : LREAL := cMeasurementRange * cGravitationalAcc / (cSensitivity * cResolution);
+
+    // Application ConMon constants
+    cSensorPacket          : UDINT                 := 512; // Number of samples in the packet incoming from the sensor	
+    cSensorSampleRate      : UDINT                 := 256;
+    cOversamples           : UDINT                 := 10;                             // number of oversamples
+    cMaxChannels           : UDINT                 := 5;                              // number of data channels
+    cWindowType            : E_CM_WindowType       := E_CM_WindowType.eCM_HannWindow; // window type for analysis
+    cWindowParameters      : T_CM_WindowParameters := [0, 0, 0, 0, 0];                // window parameters
+    cWindowLength          : UDINT                 := 3200;                           // length of signal window 
+    cOverlap               : UDINT                 := 1600;                           // recommended buffer overlap
+    cBufferLength          : UDINT                 := cWindowLength - cOverlap;       // internal buffer size with 50% overlapping	                                            						
+    cFFTLength             : UDINT                 := 4096;                           // length of FFT for mag. spectrum
+    cFFTResult             : UDINT                 := 2049;                           // result of mag. spectrum (cFFTLength/2+1)
+    cBufferLength_Spectrum : UDINT                 := 1600;                           // buffer size due to 50% overlap
+
+    //Alarm Constants
+    cMax_Alarms : UINT := 99;
+
+    // Device Constants
+    cMaxVibrationDevices : UINT := 10;
+
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

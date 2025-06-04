@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_IsoClass" Id="{3ace613b-2c49-4ced-a49e-2956fabc6cfb}">
+    <Declaration><![CDATA[(* ISO Classes *)
+{attribute 'qualified_only'}
+TYPE E_IsoClass :
+(
+	A := 1,
+	B,
+	C,
+	D
+) UDINT;
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

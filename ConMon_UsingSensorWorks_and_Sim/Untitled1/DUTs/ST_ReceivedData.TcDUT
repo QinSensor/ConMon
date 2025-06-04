@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="ST_ReceivedData" Id="{0ca77959-1b78-455c-a2b8-2c10d074b439}">
+    <Declaration><![CDATA[TYPE ST_ReceivedData :
+STRUCT
+	uuid			: STRING;
+	blename			: STRING;
+	name			: STRING;
+	id				: STRING;
+	timestamp		: STRING;
+	value 			: ARRAY[0..512] OF DINT;
+	value_y			: ARRAY[0..512] OF DINT;
+	value_z			: ARRAY[0..512] OF DINT;
+	rate			: DINT;
+	trace			: DINT;
+	count			: DINT;
+	gain			: DINT;
+	calibration		: LREAL;
+	calibration_y	: LREAL;
+	calibration_z	: LREAL;
+	temperature		: LREAL;
+	battery			: LREAL;
+	axes			: LREAL;
+	mux_axis		: LREAL;
+	measured_rate	: LREAL;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

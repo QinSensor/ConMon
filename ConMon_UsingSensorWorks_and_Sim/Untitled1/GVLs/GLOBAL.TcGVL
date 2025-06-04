@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GLOBAL" Id="{56c12257-d5f9-4db3-b31e-7e67b9695b96}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+    {attribute 'TcAnalytics'}
+    aSimBuffer : ARRAY[1..GVL_Const.cChannels] OF ARRAY[1..GVL_Const.cOversamples] OF LREAL;
+    aSimRMSResult         : ARRAY[1..GVL_Const.cChannels] OF ARRAY[1..GVL_Const.cResult_Length] OF LREAL;
+    aSimSpectrumCh1Result : ARRAY[1..(GVL_Const.cFFTLength / 2 + 1)] OF LREAL;
+    aSimSpectrumCh2Result : ARRAY[1..(GVL_Const.cFFTLength / 2 + 1)] OF LREAL;
+
+	(****** Sensor Works ******)
+    stSensorWorksHTTPSensorData : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF ST_ReceivedData; // Data from the devices
+    aSensorWorksHTTPInput    : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF ARRAY[1..GVL_Const.cSensorPacket] OF LREAL; // Scaled data to input into vibration FuBs
+    aSensorWorkISOHTTPResult : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF ARRAY[1..GVL_Const.cResult_Length] OF LREAL; // Output values from Sink
+
+    strTimeStamp : STRING;
+    strIPAddress : STRING := '192.168.4.44';
+	strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['e0:f6:fd:c4:e3:08', 'd5:d0:f9:30:83:d7'];
+	//strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['e0:f6:fd:c4:e3:08'];
+    nPortNumber  : UINT := 8080;
+	
+	bCommError : BOOL := FALSE;     // Qin
+//	fbCommErrHist : FB_ErrHist;
+    bIsProcessingRequest : BOOL := FALSE;
+    strLastRequestOutput : STRING(255);
+
+
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

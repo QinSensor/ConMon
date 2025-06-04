@@ -1,0 +1,28 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.12.760.54/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "locale": "en",
+  "localizedText": {
+    "L_Language": "Language",
+    "L_German": "German",
+    "L_English": "English",
+    "L_LanguageSelection": "Language Selection",
+    "L_CloseText": "Close",
+    "L_ConMon": "ConMon",
+    "L_SensorValues": "Sensor Values",
+    "L_Simulated": "Simulated",
+    "L_Channel1": "Channel 1",
+    "L_ISO": "ISO 10816-3 Classification",
+    "L_MonitoredValues": "Monitored Values",
+    "L_VelRMS": "Velocity RMS",
+    "L_DispRMS": "Displacement RMS",
+    "L_ISO_Class": "ISO 10816-3 Classfication",
+    "L_Channel2": "Channel 2",
+    "L_Sensor1": "Sensor 1",
+    "L_IPAddress": "IP Address",
+    "L_PortNumber": "Port Number",
+    "L_DeviceName": "Device Name",
+    "L_EnableConnection": "Enable Connection",
+    "L_Disturbance": "Disturbance",
+    "L_DisableConnection": "Disable Connection"
+  }
+}
