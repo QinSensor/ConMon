@@ -30,8 +30,22 @@ VAR
 	nSample					: UDINT;
 
 	fbTalkToGateway			: FB_TalkToGateway;
-	
 END_VAR
+VAR
+    fbGetDataFromSensor : GetDataFromSensorWorksHTTP;
+    fbSendEdge : R_TRIG;
+
+    bTriggerSend : BOOL := FALSE;
+    bStartPulse  : BOOL := TRUE;
+
+    fbHttpClient : FB_IotHttpClient;
+
+    strRawJson : STRING(8191);
+
+    bBusy   : BOOL;
+    bError  : BOOL;
+END_VAR
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
@@ -79,22 +93,6 @@ END_IF
 //GLOBAL.strDeviceID[1] := 'e0:f6:fd:c4:e3:08';
 //GLOBAL.strDeviceID[2] := 'd5:d0:f9:30:83:d7';
 
-(*fbTalkToGateway(strIPAddress        := GLOBAL.strIPAddress,
-                nPortNumber         := GLOBAL.nPortNumber,
-                strDeviceID         := GLOBAL.strDeviceID,
-                bStopConnection     :=,
-                bResetError         :=,
-                bSendRequest        :=,
-                eRequestType        :=,
-                iRequestDeviceIndex :=,
-                tPollTime           := T#1S,
-                bError              =>,
-                fbErrHist           =>,
-                aDeviceResponse     => GLOBAL.stSensorWorksHTTPSensorData,
-                strRequestOutput    =>,
-                bProcessingRequest  =>);
-				*)
-
 // Instance call to FB_TalkToGateway
 fbTalkToGateway(
     strIPAddress        := GLOBAL.strIPAddress,
@@ -114,23 +112,50 @@ fbTalkToGateway(
     bProcessingRequest  => GLOBAL.bIsProcessingRequest            // Track request state
 );
 
+
+
+IF bStartPulse THEN
+    bTriggerSend := TRUE;
+    bStartPulse := FALSE;
+ELSE
+    bTriggerSend := FALSE;
+END_IF
+
+// Detect rising edge
+fbSendEdge(CLK := bTriggerSend);
+
+// Call your FB
+fbGetDataFromSensor(
+    bSend := fbSendEdge.Q,
+    strRequest := '/device/e0:f6:fd:c4:e3:08/cache/latest',
+    bErrorReset := FALSE,
+    fbClient := fbHttpClient,
+    bBusy => bBusy,
+    bError => bError
+);
+
+// View raw content
+strRawJson := fbGetDataFromSensor.sContent;
+
+
 // Cyclic Program Calls
 CM_Sim();
 CM_SensorWorks_Sensor1();
-CM_SensorWorks_Sensor2();
-]]></ST>
+CM_SensorWorks_Sensor2();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="228" Count="43" />
-      <LineId Id="340" Count="13" />
-      <LineId Id="339" Count="0" />
-      <LineId Id="354" Count="0" />
-      <LineId Id="272" Count="0" />
+      <LineId Id="340" Count="0" />
       <LineId Id="323" Count="8" />
       <LineId Id="356" Count="0" />
       <LineId Id="332" Count="6" />
-      <LineId Id="286" Count="5" />
+      <LineId Id="286" Count="1" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="428" Count="0" />
+      <LineId Id="454" Count="20" />
       <LineId Id="111" Count="0" />
+      <LineId Id="476" Count="4" />
+      <LineId Id="475" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

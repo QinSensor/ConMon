@@ -19,7 +19,7 @@ VAR_OUTPUT
     bBusy      : BOOL;
     bError     : BOOL;
     eErrorCode : E_TalkToGateway_Err;
-    sContent   : STRING(80);
+    sContent   : STRING(8191);
 
 END_VAR
 VAR

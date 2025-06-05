@@ -37,7 +37,7 @@
 			<Settings MaxCpus="20" RouterMemory="67108864">
 				<Cpu/>
 				<Cpu CpuId="1"/>
-				<IoIdleTask Affinity="#x00000001"/>
+				<IoIdleTask Priority="30" CycleTime="5000000" Affinity="#x00000001"/>
 			</Settings>
 			<Licenses>
 				<Target>
@@ -48,20 +48,20 @@
 				</Target>
 			</Licenses>
 			<Tasks>
-				<Task Id="4" Priority="10" CycleTime="50000" AmsPort="350" Affinity="#x00000001" AdtTasks="true">
+				<Task Id="4" Priority="10" CycleTime="250000" AmsPort="350" Affinity="#x00000001" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
 				<Task Id="5" Priority="4" CycleTime="500000" AmsPort="351" Affinity="#x00000001" AdtTasks="true">
 					<Name>CM_Process_Task</Name>
 				</Task>
-				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="352" AdtTasks="true">
+				<Task Id="3" Priority="20" CycleTime="5000000" AmsPort="352" AdtTasks="true">
 					<Name>HTTP_Task</Name>
 				</Task>
 			</Tasks>
 		</System>
 		<Plc>
 			<Project GUID="{509EEEC8-344F-4247-8D42-CD20C1B3C8D4}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.plcproj" TmcFilePath="Untitled1\Untitled1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{BEEADC3D-7FB0-3EFC-33B6-A3531685DC54}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{9751F67B-0FA1-B193-AC47-D58154672142}">
 					<Name>Untitled1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -99,7 +99,7 @@
 								<OTCID>#x02010040</OTCID>
 							</ManualConfig>
 							<Priority>10</Priority>
-							<CycleTime>5000000</CycleTime>
+							<CycleTime>25000000</CycleTime>
 						</Context>
 						<Context>
 							<Id>2</Id>
@@ -108,7 +108,7 @@
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
 							<Priority>20</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>500000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
