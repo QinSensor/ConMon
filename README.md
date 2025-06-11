@@ -7,7 +7,7 @@ Download Requirements
 You will need:
 1. TwinCAT XAE (Please don’t download 4026, it operates on a package management
 system and I don’t think the HMI has been released for it yet).
-Download 4024.66
+Download 4024.6*
 https://www.beckhoff.com/en-gb/products/automation/twincat/texxxx-twincat-3-
 engineering/te1000.html?
 2. TF2000 – This is the HMI server, you can install this on your development PC
