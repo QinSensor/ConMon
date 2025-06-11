@@ -10,16 +10,17 @@ system and I don’t think the HMI has been released for it yet).
 Download 4024.6*
 https://www.beckhoff.com/en-gb/products/automation/twincat/texxxx-twincat-3-
 engineering/te1000.html?
-2. TF2000 – This is the HMI server, you can install this on your development PC
+You can find the software in Product Information -> Documentation and downloads.
+3. TF2000 – This is the HMI server, you can install this on your development PC
 https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-
 functions/tf2xxx-hmi/tf2000.html
-3. TF3300 – Scope server
+4. TF3300 – Scope server
 https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-
 functions/tf3xxx-measurement/tf3300.html
-4. TF3600 – Condition Monitoring, again don’t download the build for 4026
+5. TF3600 – Condition Monitoring, again don’t download the build for 4026
 https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-
 functions/tf3xxx-measurement/tf3600.html?
-5. TE2000 - This is HMI Engineering, without this, the PLC and HMI project can't be compatable.
+6. TE2000 - This is HMI Engineering, without this, the PLC and HMI project can't be compatable.
 
 
 The training materials are https://github.com/QinSensor/twincat_training
