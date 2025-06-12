@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="SinWaveGeneratorST" Id="{0f501a52-6dad-4c54-aeb8-ef34914753aa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SinWaveGeneratorST
+VAR_INPUT
+	fFrequency : LREAL;
+	fAmplitude: LREAL;
+END_VAR
+VAR_OUTPUT
+	fOutput: LREAL;
+END_VAR
+VAR
+	fbGetTaskIndex : GETCURTASKINDEX;
+	iTaskIndex: INT;
+	fAngle: LREAL;
+	fCycleTime: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbGetTaskIndex(index => iTaskIndex);
+fCycleTime := DINT_TO_LREAL(_TaskInfo[iTaskIndex].CycleTime) / 10000000.0;
+
+fAngle := MODABS(fAngle + (fFrequency * fCycleTime * 360.0), 360.0);
+
+fOutput := fAmplitude * SIN(DEG_TO_RAD(fAngle));
+]]></ST>
+    </Implementation>
+    <LineIds Name="SinWaveGeneratorST">
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

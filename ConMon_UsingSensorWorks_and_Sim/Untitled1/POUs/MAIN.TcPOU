@@ -141,7 +141,9 @@ strRawJson := fbGetDataFromSensor.sContent;
 // Cyclic Program Calls
 CM_Sim();
 CM_SensorWorks_Sensor1();
-CM_SensorWorks_Sensor2();]]></ST>
+CM_SensorWorks_Sensor2();
+
+]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="228" Count="43" />
@@ -156,6 +158,8 @@ CM_SensorWorks_Sensor2();]]></ST>
       <LineId Id="111" Count="0" />
       <LineId Id="476" Count="4" />
       <LineId Id="475" Count="0" />
+      <LineId Id="527" Count="0" />
+      <LineId Id="526" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

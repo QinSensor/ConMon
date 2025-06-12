@@ -1,4 +1,4 @@
-# TwinCAT: Exclude build, user, and temp files
+# TwinCAT: Exclude build, user, and temp files  ---Qin wrote, June 12
 *.tmc
 *.user
 *.sdf
