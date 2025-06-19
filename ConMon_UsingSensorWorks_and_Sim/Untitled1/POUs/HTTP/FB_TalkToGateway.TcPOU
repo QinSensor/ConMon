@@ -13,14 +13,16 @@ VAR_INPUT
     iRequestDeviceIndex : UINT; // NOT IMPLEMENTED YET
     tPollTime           : TIME;
 END_VAR
+
 VAR_OUTPUT
     bError           : BOOL;
     fbErrHist        : FB_HRErrHist; // error monitoring	
-    aDeviceResponse  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF ST_ReceivedData; // data from device
+    aDeviceResponse  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF ST_ReceivedData; // data from device  // TODO write into
     strRequestOutput : STRING; // NOT IMPLEMENTED YET
 	bProcessingRequest : BOOL;
 
 END_VAR
+
 VAR
     fbHttpClient : FB_IotHttpClient := (bKeepAlive         := TRUE,
                                         tConnectionTimeout := T#10S);
@@ -35,6 +37,11 @@ VAR
     fbGateWayRequest      : FB_RequestToGateway;
 
 END_VAR
+
+VAR   // Qin
+    bLogOnce : BOOL := TRUE;  // to make sure logging happens only once per cycle
+END_VAR
+
 
 ]]></Declaration>
     <Implementation>
@@ -84,7 +91,7 @@ IF bGetData THEN
 
         IF strDeviceID[i] <> '' AND NOT fbGetDataFromHTTPAddr.bBusy THEN
             buffstrRequest := CONCAT('/device/', strDeviceID[i]);
-            strRequest     := CONCAT(buffstrRequest, '/cache/latest'); // Builds up request to ask for data
+            strRequest     := CONCAT(buffstrRequest, '/cache/latest');   // Builds up request to ask for data  replace with parameter/
 
             bExecuteSend := TRUE;
         ELSIF strDeviceID[i] = '' AND NOT fbGetDataFromHTTPAddr.bBusy THEN
@@ -130,6 +137,7 @@ END_IF
 PollTimer(IN := fbHttpClient.bConfigured AND NOT PollTimer.Q);
 
 fbGateWayRequest(fbClient := fbHttpClient);
+
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_TalkToGateway">
@@ -148,6 +156,7 @@ fbGateWayRequest(fbClient := fbHttpClient);
       <LineId Id="1190" Count="11" />
       <LineId Id="1248" Count="1" />
       <LineId Id="1202" Count="9" />
+      <LineId Id="1423" Count="0" />
       <LineId Id="430" Count="0" />
     </LineIds>
   </POU>

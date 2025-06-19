@@ -32,7 +32,7 @@ VAR
     nResCount      : UDINT;
     nValidResCount : UDINT;
     nErrCount      : UDINT;
-    sContent       : STRING(8191);
+    sContent       : STRING(16000);
 
     jsonProp : SJsonValue;
 

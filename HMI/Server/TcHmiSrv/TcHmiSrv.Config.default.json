@@ -8099,6 +8099,8 @@
         "/Beckhoff.TwinCAT.HMI.Controls": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.762.46\\runtimes\\native1.12-tchmi",
         "/Beckhoff.TwinCAT.HMI.Functions": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.762.46\\runtimes\\native1.12-tchmi",
         "/Beckhoff.TwinCAT.HMI.ResponsiveNavigation": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.ResponsiveNavigation.12.762.46\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.Scope": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Scope.14.1.205",
+        "/Beckhoff.TwinCAT.HMI.Scope.Meta": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Scope.Meta.1.1.205",
         "/Beckhoff.TwinCAT.HMI.ScopeControl": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.ScopeControl.12.762.46\\runtimes\\native1.12-tchmi",
         "/bin": "..\\..\\HMI\\bin\\",
         "/bin/framework": "..\\..\\HMI\\bin\\framework",

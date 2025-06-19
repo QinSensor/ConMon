@@ -30,9 +30,10 @@ VAR
 	nSample					: UDINT;
 
 	fbTalkToGateway			: FB_TalkToGateway;
+
 END_VAR
-VAR
-    fbGetDataFromSensor : GetDataFromSensorWorksHTTP;
+
+VAR   //Qin
     fbSendEdge : R_TRIG;
 
     bTriggerSend : BOOL := FALSE;
@@ -40,11 +41,13 @@ VAR
 
     fbHttpClient : FB_IotHttpClient;
 
-    strRawJson : STRING(8191);
+   // strRawJson : STRING(8191);
 
     bBusy   : BOOL;
     bError  : BOOL;
 END_VAR
+ 
+
 
 ]]></Declaration>
     <Implementation>
@@ -98,9 +101,9 @@ fbTalkToGateway(
     strIPAddress        := GLOBAL.strIPAddress,
     nPortNumber         := GLOBAL.nPortNumber,
     strDeviceID         := GLOBAL.strDeviceID,
-    bStopConnection     := FALSE,                                  // TODO: Set logic to stop the connection when needed
+    bStopConnection     :=,                                  // TODO: Set logic to stop the connection when needed.  
     bResetError         := FALSE,                                  // TODO: Link to a button or watchdog to reset error
-    bSendRequest        := TRUE,                                   // Should be controlled by a trigger condition
+    bSendRequest        := ,                                   // Should be controlled by a trigger condition
     eRequestType := E_RequestType.eViewRequest,
 	//eRequestType        := E_RequestType.eGetData,              // Replace with actual enum value as needed
     iRequestDeviceIndex := 1,                                      // Index of the device to talk to (1 or 2)
@@ -113,7 +116,7 @@ fbTalkToGateway(
 );
 
 
-
+// this block Qin
 IF bStartPulse THEN
     bTriggerSend := TRUE;
     bStartPulse := FALSE;
@@ -121,21 +124,24 @@ ELSE
     bTriggerSend := FALSE;
 END_IF
 
+
 // Detect rising edge
 fbSendEdge(CLK := bTriggerSend);
 
-// Call your FB
+// Call your FB   //Qin
+(*
 fbGetDataFromSensor(
     bSend := fbSendEdge.Q,
-    strRequest := '/device/e0:f6:fd:c4:e3:08/cache/latest',
+    strRequest := '/device/d5:d0:f9:30:83:d7/cache/latest',   // Qin
     bErrorReset := FALSE,
     fbClient := fbHttpClient,
     bBusy => bBusy,
     bError => bError
 );
+*)
 
 // View raw content
-strRawJson := fbGetDataFromSensor.sContent;
+// strRawJson := fbGetDataFromSensor.sContent;   //Qin
 
 
 // Cyclic Program Calls
@@ -154,12 +160,16 @@ CM_SensorWorks_Sensor2();
       <LineId Id="286" Count="1" />
       <LineId Id="291" Count="0" />
       <LineId Id="428" Count="0" />
-      <LineId Id="454" Count="20" />
+      <LineId Id="454" Count="5" />
+      <LineId Id="582" Count="0" />
+      <LineId Id="460" Count="14" />
       <LineId Id="111" Count="0" />
       <LineId Id="476" Count="4" />
       <LineId Id="475" Count="0" />
       <LineId Id="527" Count="0" />
       <LineId Id="526" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

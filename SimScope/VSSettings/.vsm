@@ -5,12 +5,12 @@
   <Children>
     <Node>
       <Title>YT Scope Project</Title>
-      <Expanded>False</Expanded>
-      <FileName>D:\Beckhoff\ConMon_UsingSensorWorks_and_Sim_v1_4\SimScope\YT Scope Project.tcscopex</FileName>
+      <Expanded>True</Expanded>
+      <FileName>D:\Beckhoff\ConMon_UsingSensorWorks_and_Sim_v2_0\SimScope\YT Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -95,12 +95,12 @@
         </Node>
         <Node>
           <Title>Sim</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Ch1DispRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -113,7 +113,7 @@
             </Node>
             <Node>
               <Title>Ch1VelRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -126,7 +126,7 @@
             </Node>
             <Node>
               <Title>Ch2DispRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -139,7 +139,7 @@
             </Node>
             <Node>
               <Title>Ch2VelRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -154,12 +154,12 @@
         </Node>
         <Node>
           <Title>Sensor1</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>DisplacementRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -172,7 +172,7 @@
             </Node>
             <Node>
               <Title>VelocityRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -185,7 +185,7 @@
             </Node>
             <Node>
               <Title>AccelerationRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -200,12 +200,12 @@
         </Node>
         <Node>
           <Title>Sensor2</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>DisplacementRMS (1)</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -218,7 +218,7 @@
             </Node>
             <Node>
               <Title>VelocityRMS (1)</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -231,7 +231,7 @@
             </Node>
             <Node>
               <Title>AccelerationRMS (1)</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -246,12 +246,12 @@
         </Node>
         <Node>
           <Title>Array Bar Chart</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -266,12 +266,12 @@
         </Node>
         <Node>
           <Title>Array Bar Chart (1)</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group (1)</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>

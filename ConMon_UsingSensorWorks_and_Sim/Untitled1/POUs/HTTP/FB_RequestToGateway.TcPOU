@@ -19,7 +19,11 @@ VAR_OUTPUT
     bBusy      : BOOL;
     bError     : BOOL;
     eErrorCode : E_TalkToGateway_Err;
-    sContent   : STRING(8191);
+    sContent   : STRING(80);   // not to get data
+	//sContent   : ARRAY [0..16000] OF BYTE;  // Changed from STRING(8191)    // Qin
+	//sContent : ARRAY [0..20] OF STRING(8000);  // 3 strings of 8000 chars each  Qin
+	
+
 
 END_VAR
 VAR
@@ -38,12 +42,24 @@ VAR
     nErrCount         : UDINT;
 
 	strRequestOutput: STRING(255);
+	
+		// Debug variables   QIn
+    nLen0 : INT;
+    nLen1 : INT;
+    nLen2 : INT;
+    sFirst10_0 : STRING(10);
+    sFirst10_1 : STRING(10);
+    sFirst10_2 : STRING(10);
+	sTail100: STRING(50);
+
+	nLenContent: UDINT;
+	nStartPos: UDINT;
+	sContentTail: STRING(50);
+	i: UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// NOT IMPLEMENTED YET
-CASE step OF
-
+      <ST><![CDATA[CASE step OF
     eIdle:
 
         IF bExecute THEN
@@ -83,11 +99,8 @@ CASE step OF
         step           := eRequestSend;
 	
 	eViewRequest:   // Qin
-       // buffstrRequest := CONCAT('/view/', strDeviceID[iRequestDeviceIndex]);
-       // strRequest     := CONCAT(buffstrRequest, '/1');    // get HTML file
 		buffstrRequest := CONCAT('/device/', strDeviceID[iRequestDeviceIndex]);
 		strRequest     := CONCAT(buffstrRequest, '/cache/latest');
-
 		
         step           := eRequestSend;
 
@@ -144,10 +157,24 @@ CASE step OF
     eERROR:
 // Error handling
 
-END_CASE]]></ST>
+END_CASE
+
+// Qin debug sContent
+nLenContent := LEN2(ADR(sContent)); // Correct usage with ADR
+IF nLenContent > 50 THEN
+    nStartPos := nLenContent - 50 + 1; // Position for last 100 chars
+ELSE
+    nStartPos := 1; // If string shorter than 100, start at beginning
+END_IF;
+//sContentTail := MID2(ADR(sContent), nStartPos, 100); // Extract substring// MID2 not available
+FOR i := 0 TO 49 DO
+    sContentTail[i] := sContent[nStartPos + i - 1];
+END_FOR
+]]></ST>
     </Implementation>
     <LineIds Name="FB_RequestToGateway">
-      <LineId Id="1198" Count="5" />
+      <LineId Id="1199" Count="0" />
+      <LineId Id="1201" Count="2" />
       <LineId Id="1333" Count="0" />
       <LineId Id="1335" Count="0" />
       <LineId Id="1340" Count="0" />
@@ -155,12 +182,19 @@ END_CASE]]></ST>
       <LineId Id="1334" Count="0" />
       <LineId Id="1204" Count="28" />
       <LineId Id="1324" Count="0" />
-      <LineId Id="1326" Count="2" />
+      <LineId Id="1326" Count="0" />
       <LineId Id="1331" Count="1" />
-      <LineId Id="1329" Count="1" />
+      <LineId Id="1330" Count="0" />
       <LineId Id="1325" Count="0" />
       <LineId Id="1233" Count="53" />
       <LineId Id="48" Count="0" />
+      <LineId Id="1397" Count="0" />
+      <LineId Id="1390" Count="0" />
+      <LineId Id="1521" Count="0" />
+      <LineId Id="1511" Count="4" />
+      <LineId Id="1389" Count="0" />
+      <LineId Id="1523" Count="2" />
+      <LineId Id="1522" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -16,8 +16,10 @@ VAR_GLOBAL
 
     strTimeStamp : STRING;
     strIPAddress : STRING := '192.168.4.44';
-	strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['e0:f6:fd:c4:e3:08', 'd5:d0:f9:30:83:d7'];
-	//strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['e0:f6:fd:c4:e3:08'];
+	//strIPAddress : STRING := '192.168.216.148';
+	//strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['d5:d0:f9:30:83:d7'];
+	
+	strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['fa:e2:ad:e2:8d:99', 'd5:d0:f9:30:83:d7'];
     nPortNumber  : UINT := 8080;
 	
 	bCommError : BOOL := FALSE;     // Qin
@@ -26,9 +28,9 @@ VAR_GLOBAL
     strLastRequestOutput : STRING(255);
 	
 	iAnalueIn1 AT %I* : INT;  // Qin
-	iAnalueIn2 AT %I* : INT;
+	Sensor1Ch1AccRMSiAnalueIn2 AT %I* : INT;
 	
-accelX : ARRAY[1..28] OF REAL := [
+Sensor1Ch1AccRMS : ARRAY[1..28] OF REAL := [
     37.0, 15.0, 10.0, 23.0, 17.0, 21.0, 23.0, 17.0,
     24.0, 18.0, 3.0, 18.0, 38.0, 29.0, 11.0, 0.0,
     7.0, 20.0, 8.0, 7.0, 24.0, 9.0, 1.0, 28.0,
@@ -37,7 +39,17 @@ accelX : ARRAY[1..28] OF REAL := [
 
 
 
+
 END_VAR
+
+
+
+
+
+
+
+
+
 ]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -96,13 +96,7 @@
     <Compile Include="POUs\HTTP\GetDataFromSensorWorksHTTP.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HTTP\TalkToRest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\SinWaveGeneratorST.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

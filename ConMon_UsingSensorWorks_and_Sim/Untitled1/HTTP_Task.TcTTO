@@ -4,9 +4,6 @@
     <!--CycleTime in micro seconds.-->
     <CycleTime>500000</CycleTime>
     <Priority>20</Priority>
-    <PouCall>
-      <Name>TalkToRest</Name>
-    </PouCall>
     <TaskFBGuid>{f5aee399-a7db-4512-af79-a92c5962f840}</TaskFBGuid>
     <Fb_init>{f01b9a72-0947-46e7-ae79-506e360347d4}</Fb_init>
     <Fb_exit>{799abb4a-9688-431c-8be5-9a9ff724805e}</Fb_exit>

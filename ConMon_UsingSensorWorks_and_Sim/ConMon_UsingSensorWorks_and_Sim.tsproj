@@ -43,8 +43,8 @@
 				<Target>
 					<ManualSelect>{4989A799-AEEA-4FEE-88EF-666B99EEFB45}</ManualSelect>
 					<ManualSelect>{27326EE5-AB30-4084-B15B-8CCA96CCBF0B}</ManualSelect>
-					<ManualSelect>{2752D285-16AD-4E89-AE6C-80E72784D264}</ManualSelect>
 					<ManualSelect>{3DDCAB25-BF0E-412C-A721-DC77C1B8099C}</ManualSelect>
+					<ManualSelect>{2752D285-16AD-4E89-AE6C-80E72784D264}</ManualSelect>
 				</Target>
 			</Licenses>
 			<Tasks>
@@ -61,7 +61,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{509EEEC8-344F-4247-8D42-CD20C1B3C8D4}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.plcproj" TmcFilePath="Untitled1\Untitled1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{E2FE745D-9BD4-D4AF-15E3-901F4A11A920}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{0784C1F5-4E14-5755-C93F-6B6C74362DB0}">
 					<Name>Untitled1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -80,6 +80,18 @@
 							<Name>CM_SensorWorks_Sensor2.ISO_10816_Classification</Name>
 							<Comment><![CDATA[ output ]]></Comment>
 							<Type GUID="{630B5E83-F079-E233-8B43-D407BABF5B04}">E_IsoClass</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="1" ContextId="2" AreaNo="32">
+						<Name>HTTP_Task Inputs</Name>
+						<Var>
+							<Name>GLOBAL.iAnalueIn1</Name>
+							<Comment><![CDATA[ Qin]]></Comment>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>GLOBAL.Sensor1Ch1AccRMSiAnalueIn2</Name>
+							<Type>INT</Type>
 						</Var>
 					</Vars>
 					<Contexts>

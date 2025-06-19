@@ -155,6 +155,10 @@ IF GLOBAL.stSensorWorksHTTPSensorData[1].timestamp <> strOldTS THEN
     bNewSensorDataAvailable := TRUE;
 END_IF
 
+// TODO value follow timestamp
+
+
+
 // Collection
 IF bNewSensorDataAvailable THEN
     // Check to make sure code works
@@ -210,7 +214,12 @@ strOldTS := GLOBAL.stSensorWorksHTTPSensorData[1].timestamp;]]></ST>
       <LineId Id="17" Count="0" />
     </LineIds>
     <LineIds Name="CM_SensorWorks_Sensor1.SourceData">
-      <LineId Id="112" Count="36" />
+      <LineId Id="112" Count="7" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="120" Count="28" />
       <LineId Id="68" Count="0" />
     </LineIds>
   </POU>

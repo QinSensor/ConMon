@@ -76,6 +76,7 @@ VAR_GLOBAL CONSTANT
     cMaxVibrationDevices : UINT := 10;
 
 END_VAR
+
 ]]></Declaration>
   </GVL>
 </TcPlcObject>
