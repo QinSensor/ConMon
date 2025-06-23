@@ -19,8 +19,6 @@ https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-func
 6. TE2000 - This is HMI Engineering, without this, the PLC and HMI project can't be compatable.
 
 
-The training materials are https://github.com/QinSensor/twincat_training
-
 How to Run:
 1. Open TwinCAT XAE Shell in Windows OS;
 File -> Open  -> Project/Solution, choose ConMon_UsingSensorWorks_and_Sim
