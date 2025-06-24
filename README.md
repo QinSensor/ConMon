@@ -17,6 +17,11 @@ https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-func
 5. TF3600 – Condition Monitoring, again don’t download the build for 4026
 https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-functions/tf3xxx-measurement/tf3600.html?
 6. TE2000 - This is HMI Engineering, without this, the PLC and HMI project can't be compatable.
+7. TF3300 - If Error in HMI license, try:
+   https://www.beckhoff.com/en-gb/products/automation/twincat/tfxxxx-twincat-3-functions/tf3xxx-measurement/tf3300.html?
+   In TE13x0, TE35x0 | TwinCAT 3 Measurement (Scope View, Scope Server, Bode Plot, Filter Designer etc.), 
+   Download this file which is named: Update without XAE shell. 
+   
 
 
 How to Run:
