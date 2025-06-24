@@ -32,10 +32,13 @@ VAR
     nResCount      : UDINT;
     nValidResCount : UDINT;
     nErrCount      : UDINT;
-    sContent       : STRING(16000);
+    sContent       : STRING(50000);
+	sContent_Qin   : STRING(2000);
+
 
     jsonProp : SJsonValue;
-
+	
+	jsonDoc_Qin     : SJsonValue;
     jsonDoc2        : SJsonValue;
     jsonIterator    : SJsonIterator;
     jsonIteratorEnd : SJsonIterator;
@@ -43,6 +46,18 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[RisingEdge(CLK := bSend);
+
+(*  use concat instead of +
+sContent_Qin := '{"uuid":'
++'"d5:d0:f9:30:83:d7",'
+    + '"blename":"BluVib875109",'
+    + '"name":"",'
+    + '"id":"b8eb73b8-4685-4694-5ea0-9d5c9ec1c360",'
+    + '"time":"2025-06-18T14:07:35+01:00",'
+    + '"value":['
+    + '46,45,46,44,44,45,45,43,43,45,45,43,45,46,46,47,47,46,46,44,45,46'
+    + ']}';
+*)
 
 CASE nState OF
     0:
@@ -98,9 +113,10 @@ CASE nState OF
         END_IF
 
     2:
-
-        jsonDoc2 := fbJson.ParseDocument(sContent);    //  string sContent is parsed into a JSON document structure  
-		jsonDoc := fbJson.ParseDocument(sContent);   // Qin
+			
+        //jsonDoc := fbJson.ParseDocument(sContent);    //  string sContent is parsed into a JSON document structure  
+		jsonDoc2  := fbJson.ParseDocument(sContent);   // Qin
+		//jsonDoc_Qin := fbJson.ParseDocument(sContent_Qin);
 
         jsonProp := fbJson.FindMember(jsonDoc, 'uuid');
 
@@ -266,10 +282,18 @@ END_CASE
 ]]></ST>
     </Implementation>
     <LineIds Name="GetDataFromSensorWorksHTTP">
-      <LineId Id="910" Count="4" />
+      <LineId Id="910" Count="0" />
+      <LineId Id="1232" Count="0" />
+      <LineId Id="1223" Count="1" />
+      <LineId Id="1231" Count="0" />
+      <LineId Id="1225" Count="5" />
+      <LineId Id="1222" Count="0" />
+      <LineId Id="1233" Count="0" />
+      <LineId Id="911" Count="3" />
       <LineId Id="1168" Count="0" />
       <LineId Id="915" Count="51" />
       <LineId Id="1208" Count="0" />
+      <LineId Id="1212" Count="0" />
       <LineId Id="967" Count="161" />
       <LineId Id="9" Count="0" />
     </LineIds>

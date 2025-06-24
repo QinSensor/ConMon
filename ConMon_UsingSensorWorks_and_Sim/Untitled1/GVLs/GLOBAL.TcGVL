@@ -19,7 +19,7 @@ VAR_GLOBAL
 	//strIPAddress : STRING := '192.168.216.148';
 	//strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['d5:d0:f9:30:83:d7'];
 	
-	strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['fa:e2:ad:e2:8d:99', 'd5:d0:f9:30:83:d7'];
+	strDeviceID  : ARRAY[1..GVL_Const.cMaxVibrationDevices] OF STRING := ['fa:e2:ad:e2:8d:99', 'd5:d0:f9:30:83:d7', 'fb:0c:16:50:98:db'];
     nPortNumber  : UINT := 8080;
 	
 	bCommError : BOOL := FALSE;     // Qin
