@@ -13,7 +13,7 @@ END_VAR
 VAR_OUTPUT
     bBusy            : BOOL;
     bError           : BOOL;
-    jsonObatinedData : ST_ReceivedData;
+    jsonObtainedData : ST_ReceivedData;
 
 END_VAR
 VAR
@@ -47,7 +47,7 @@ END_VAR]]></Declaration>
 CASE nState OF
     0:
         IF RisingEdge.Q AND NOT bError THEN
-			MEMSET(ADR(jsonObatinedData),0, SIZEOF(jsonObatinedData));
+			MEMSET(ADR(jsonObtainedData),0, SIZEOF(jsonObtainedData));
             IF fbRequest.SendRequest(sUri         := strRequest,
                                      fbClient     := fbClient,
                                      eRequestType := ETcIotHttpRequestType.HTTP_Get,
@@ -99,108 +99,109 @@ CASE nState OF
 
     2:
 
-        jsonDoc2 := fbJson.ParseDocument(sContent);
+        jsonDoc2 := fbJson.ParseDocument(sContent);    //  string sContent is parsed into a JSON document structure  
+		jsonDoc := fbJson.ParseDocument(sContent);   // Qin
 
         jsonProp := fbJson.FindMember(jsonDoc, 'uuid');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.uuid := fbJson.GetString(jsonProp);
+            jsonObtainedData.uuid := fbJson.GetString(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'blename');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.blename := fbJson.GetString(jsonProp);
+            jsonObtainedData.blename := fbJson.GetString(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'name');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.name := fbJson.GetString(jsonProp);
+            jsonObtainedData.name := fbJson.GetString(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'id');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.id := fbJson.GetString(jsonProp);
+            jsonObtainedData.id := fbJson.GetString(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'time');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.timestamp := fbJson.GetString(jsonProp);
+            jsonObtainedData.timestamp := fbJson.GetString(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'rate');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.rate := fbJson.GetInt(jsonProp);
+            jsonObtainedData.rate := fbJson.GetInt(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'trace');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.trace := fbJson.GetInt(jsonProp);
+            jsonObtainedData.trace := fbJson.GetInt(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'count');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.count := fbJson.GetInt(jsonProp);
+            jsonObtainedData.count := fbJson.GetInt(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'gain');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.gain := fbJson.GetInt(jsonProp);
+            jsonObtainedData.gain := fbJson.GetInt(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'calibration');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.calibration := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.calibration := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'calibration_y');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.calibration_y := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.calibration_y := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'calibration_z');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.calibration_z := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.calibration_z := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'temperature');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.temperature := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.temperature := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'battery');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.battery := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.battery := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'axes');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.axes := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.axes := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'mux_axis');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.mux_axis := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.mux_axis := fbJson.GetDouble(jsonProp);
         END_IF
 
         jsonProp := fbJson.FindMember(jsonDoc, 'measure_rate');
 
         IF (jsonProp <> 0) THEN
-            jsonObatinedData.measured_rate := fbJson.GetDouble(jsonProp);
+            jsonObtainedData.measured_rate := fbJson.GetDouble(jsonProp);
         END_IF
 
         nState := 3;
@@ -216,7 +217,7 @@ CASE nState OF
 
             WHILE jsonIterator <> jsonIteratorEnd DO
                 IF jsonProp <> 0 THEN
-                    jsonObatinedData.value[i + 1] := fbJson.GetInt(jsonIterator);
+                    jsonObtainedData.value[i + 1] := fbJson.GetInt(jsonIterator);
                 END_IF
 
                 i            := i + 1;
@@ -233,7 +234,7 @@ CASE nState OF
 
             WHILE jsonIterator <> jsonIteratorEnd DO
                 IF jsonProp <> 0 THEN
-                    jsonObatinedData.value_y[i + 1] := fbJson.GetInt(jsonIterator);
+                    jsonObtainedData.value_y[i + 1] := fbJson.GetInt(jsonIterator);
                 END_IF
 
                 i            := i + 1;
@@ -250,7 +251,7 @@ CASE nState OF
 
             WHILE jsonIterator <> jsonIteratorEnd DO
                 IF jsonProp <> 0 THEN
-                    jsonObatinedData.value_z[i + 1] := fbJson.GetInt(jsonIterator);
+                    jsonObtainedData.value_z[i + 1] := fbJson.GetInt(jsonIterator);
                 END_IF
 
                 i            := i + 1;
@@ -267,7 +268,9 @@ END_CASE
     <LineIds Name="GetDataFromSensorWorksHTTP">
       <LineId Id="910" Count="4" />
       <LineId Id="1168" Count="0" />
-      <LineId Id="915" Count="213" />
+      <LineId Id="915" Count="51" />
+      <LineId Id="1208" Count="0" />
+      <LineId Id="967" Count="161" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

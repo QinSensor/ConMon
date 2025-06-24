@@ -107,7 +107,7 @@ IF bGetData THEN
         END_IF
 
         IF NOT fbGetDataFromHTTPAddr.bBusy AND NOT fbGetDataFromHTTPAddr.bError AND strDeviceID[i] <> '' THEN
-            aDeviceResponse[i] := fbGetDataFromHTTPAddr.jsonObatinedData;
+            aDeviceResponse[i] := fbGetDataFromHTTPAddr.jsonObtainedData;
             i                  := i + 1; // Look for next array point
         END_IF
     END_IF
