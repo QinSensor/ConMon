@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
+	<TargetInfo>
+		<TcTargetDesc>
+			<TargetType>PC-WIN 10.0</TargetType>
+			<TargetVersion>
+				<Version>3</Version>
+				<Revision>1</Revision>
+				<Build>4024</Build>
+			</TargetVersion>
+			<TargetFeatures>
+				<Level>CP</Level>
+				<NetId>137.195.208.50.1.1</NetId>
+			</TargetFeatures>
+			<Hardware>
+				<Model/>
+				<SerialNo/>
+				<CPUVersion>0.0</CPUVersion>
+				<Date>0.0.00</Date>
+				<CPUArchitecture>0</CPUArchitecture>
+			</Hardware>
+			<OsImage>
+				<ImageDevice/>
+				<ImageVersion/>
+				<ImageLevel/>
+				<OsName>Windows 10 Home</OsName>
+				<OsVersion>10.0</OsVersion>
+			</OsImage>
+		</TcTargetDesc>
+	</TargetInfo>
+	<LicenseInfo>
+		<SystemId Level="90">{8605E900-C75C-465A-3E2D-032DD0165501}</SystemId>
+		<PurchaseOrder><![CDATA[01234567]]></PurchaseOrder>
+		<IssueTime>2025-06-28T17:48:00</IssueTime>
+		<License>
+			<LicenseId>{66689887-CCBD-452C-AC9A-039D997C6E66}</LicenseId>
+			<Name>TC3 PLC</Name>
+			<OrderNo>TC1200</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{A0C635DF-5F13-43BE-8D0B-613386AD9A20}</LicenseId>
+			<Name>TC3 Condition Monitoring Level 1</Name>
+			<OrderNo>TF3600</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{42E60F0D-E1AD-4B78-84B8-FD3ECF44FAA7}</LicenseId>
+			<Name>TC3 IoT HTTPS/REST</Name>
+			<OrderNo>TF6760</OrderNo>
+		</License>
+		<License ManuallyAdded="true">
+			<LicenseId>{4989A799-AEEA-4FEE-88EF-666B99EEFB45}</LicenseId>
+			<Name>TC3 Scope View Professional</Name>
+			<OrderNo>TE1300</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{796D380F-D49E-4C0C-A05F-500052FAC883}</LicenseId>
+			<Name>TC3 HMI Server</Name>
+			<OrderNo>TF2000</OrderNo>
+		</License>
+		<License ManuallyAdded="true">
+			<LicenseId>{27326EE5-AB30-4084-B15B-8CCA96CCBF0B}</LicenseId>
+			<Name>TC3 HMI Scope</Name>
+			<OrderNo>TF2300</OrderNo>
+		</License>
+		<License ManuallyAdded="true">
+			<LicenseId>{2752D285-16AD-4E89-AE6C-80E72784D264}</LicenseId>
+			<Name>TC3 HMI Clients Pack 1</Name>
+			<OrderNo>TF2010</OrderNo>
+		</License>
+	</LicenseInfo>
+</TcLicenseInfo>

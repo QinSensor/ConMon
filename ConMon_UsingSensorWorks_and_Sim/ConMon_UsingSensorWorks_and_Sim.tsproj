@@ -40,11 +40,11 @@
 				<IoIdleTask Priority="30" CycleTime="5000000" Affinity="#x00000001"/>
 			</Settings>
 			<Licenses>
-				<Target>
+				<Target BkhfOrder="01234567">
 					<ManualSelect>{4989A799-AEEA-4FEE-88EF-666B99EEFB45}</ManualSelect>
 					<ManualSelect>{27326EE5-AB30-4084-B15B-8CCA96CCBF0B}</ManualSelect>
-					<ManualSelect>{2752D285-16AD-4E89-AE6C-80E72784D264}</ManualSelect>
 					<ManualSelect>{3DDCAB25-BF0E-412C-A721-DC77C1B8099C}</ManualSelect>
+					<ManualSelect>{2752D285-16AD-4E89-AE6C-80E72784D264}</ManualSelect>
 				</Target>
 			</Licenses>
 			<Tasks>
@@ -61,7 +61,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{509EEEC8-344F-4247-8D42-CD20C1B3C8D4}" Name="Untitled1" PrjFilePath="Untitled1\Untitled1.plcproj" TmcFilePath="Untitled1\Untitled1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{E9ADC016-9968-3687-9EFF-CBC31DA65F53}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Untitled1\Untitled1.tmc" TmcHash="{36D92B5F-19FE-DFAA-77A4-C57A856C9137}">
 					<Name>Untitled1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">

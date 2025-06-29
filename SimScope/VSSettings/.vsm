@@ -113,7 +113,7 @@
             </Node>
             <Node>
               <Title>Ch1VelRMS</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -139,7 +139,7 @@
             </Node>
             <Node>
               <Title>Ch2VelRMS</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -154,12 +154,12 @@
         </Node>
         <Node>
           <Title>Sensor1</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>DisplacementRMS</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -172,7 +172,7 @@
             </Node>
             <Node>
               <Title>VelocityRMS</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -185,7 +185,7 @@
             </Node>
             <Node>
               <Title>AccelerationRMS</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -246,12 +246,12 @@
         </Node>
         <Node>
           <Title>Array Bar Chart</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -266,12 +266,12 @@
         </Node>
         <Node>
           <Title>Array Bar Chart (1)</Title>
-          <Expanded>True</Expanded>
+          <Expanded>False</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
               <Title>Axis Group (1)</Title>
-              <Expanded>True</Expanded>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
